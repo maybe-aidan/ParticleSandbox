@@ -88,7 +88,7 @@ vec2 map_of_the_world(in vec3 p){
         world = smoothMin(world, distance_from_sphere(p - u_positions[i], u_radii[i]), 3);
     }
 
-    return vec2(world, 4);
+    return vec2(world, 1);
 }
 
 vec3 calculate_normal(in vec3 p) {
@@ -105,21 +105,18 @@ vec3 calculate_normal(in vec3 p) {
 // all functions come in a tuple, with the x component being the float value of the function, 
 // and the y component being the ID for assigning a color or material to the object
 vec3 getMaterial(vec3 p, float ID) {
-    vec3 m;
     switch(int(ID)) {
         case 1:
-            m = vec3(0.75, 0.12, 0.0); break;
+            return vec3(0.75 * p.x + 0.1, 0.12 * p.y + 0.3, 0.3 * p.z + 0.2);
         case 2:
-            m = vec3(0.0, 0.7333, 0.1843); break;
+            return vec3(0.0, 0.7333, 0.1843);
         case 3:
-            m = vec3(0.749, 0.0, 0.902); break;
+            return vec3(0.749, 0.0, 0.902);
         case 4: // plane
-            m = vec3(0.2 + 0.4 * mod(floor(p.x) + floor(p.z), 2.0)); break;
+            return vec3(0.2 + 0.4 * mod(floor(p.x) + floor(p.z), 2.0));
         default:
-            m = vec3(1.0, 1.0, 1.0); break;
+            return vec3(1.0, 1.0, 1.0);
     }
-
-    return m;
 }
 
 vec3 phong(in vec3 lightDir, in vec3 viewDir, in vec3 N, in vec3 color) {
